@@ -6,11 +6,11 @@ const server = new Hapi.Server();
 
 server.connection({
   host: 'localhost',
-  port: Number(4000),
+  port: Number(8080),
 });
 
 // console.log(booksObj);
 
 server.route(Routes);
-server.start();
+// server.start();
 module.exports = server;
