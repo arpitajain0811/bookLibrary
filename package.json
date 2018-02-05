@@ -1,0 +1,28 @@
+{
+  "name": "booklibrary",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "NODE_ENV=test node_modules/.bin/sequelize db:migrate:undo:all && NODE_ENV=test node_modules/.bin/sequelize db:migrate && jest",
+    "start": "node_modules/.bin/sequelize db:migrate",
+    "coverage": "jest --coverage --notify"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^4.17.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.6.1",
+    "jest": "^22.1.4",
+    "sequelize-cli": "^3.2.0"
+  },
+  "dependencies": {
+    "hapi": "^16.6.2",
+    "pg": "^7.4.1",
+    "sequelize": "^4.32.6"
+  }
+}
