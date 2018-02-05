@@ -12,5 +12,5 @@ server.connection({
 // console.log(booksObj);
 
 server.route(Routes);
-
+server.start();
 module.exports = server;
