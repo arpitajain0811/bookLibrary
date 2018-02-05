@@ -11,4 +11,14 @@ describe('Testing that the Hapi server connects', () => {
       done();
     });
   });
+  it('Should return number of books for sucessful call to api1', (done) => {
+    const request = {
+      method: 'GET',
+      url: '/books',
+    };
+    server.inject(request, (response) => {
+      expect(response.result).toBe(12);
+      done();
+    });
+  });
 });
