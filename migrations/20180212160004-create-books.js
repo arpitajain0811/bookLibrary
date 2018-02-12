@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      id: {
+      bookId: {
         type: Sequelize.INTEGER
       },
       name: {
@@ -16,6 +16,9 @@ module.exports = {
       },
       author: {
         type: Sequelize.STRING
+      },
+      rating: {
+        type: Sequelize.DECIMAL
       },
       createdAt: {
         allowNull: false,

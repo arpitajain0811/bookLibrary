@@ -23,6 +23,8 @@
   "dependencies": {
     "hapi": "^16.6.2",
     "pg": "^7.4.1",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2",
     "sequelize": "^4.32.6"
   }
 }

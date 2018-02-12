@@ -6,10 +6,8 @@ const server = new Hapi.Server();
 
 server.connection({
   host: 'localhost',
-  port: Number(8080),
+  port: Number(5000),
 });
-
-// console.log(booksObj);
 
 server.route(Routes);
 // server.start();

@@ -3,21 +3,21 @@
     "username": "arpitajain",
     "password": null,
     "database": "arpitajain_books",
-    "host": "127.0.0.1",
+    "host": "localhost",
     "dialect": "postgres"
   },
   "test": {
     "username": "arpitajain",
     "password": null,
     "database": "arpitajain_books",
-    "host": "127.0.0.1",
+    "host": "localhost",
     "dialect": "postgres"
   },
   "production": {
     "username": "arpitajain",
     "password": null,
     "database": "arpitajain_books",
-    "host": "127.0.0.1",
+    "host": "localhost",
     "dialect": "postgres"
   }
 }
