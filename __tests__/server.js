@@ -1,5 +1,6 @@
 const server = require('../src/server');
 const bookFns = require('../routes/books.js');
+const Models = require('../models');
 
 describe('testing functions for getting books and ratings', () => {
   it('get books from URL1', () => {
@@ -55,6 +56,60 @@ describe('testing functions for getting books and ratings', () => {
     server.inject(request, (response) => {
       expect(response.result.message).toEqual('Books added to database');
       done();
+    });
+  }, 100000);
+});
+describe('like and unlike books', () => {
+  it('gets response message as liked on like for a book', (done) => {
+    const request = {
+      method: 'PUT',
+      url: '/like/7',
+    };
+    server.inject(request, (response) => {
+      expect(response.result.message).toEqual('Liked');
+      done();
+    });
+  }, 100000);
+  it('checks if status is liked in db', (done) => {
+    const request = {
+      method: 'PUT',
+      url: '/like/7',
+    };
+    server.inject(request, () => {
+      Models.likes.findOne({
+        where: {
+          bookId: 7,
+        },
+      }).then((result) => {
+        expect(result.dataValues.liked).toEqual(1);
+        done();
+      });
+    });
+  }, 100000);
+  it('gets response message as unliked on unlike for a book', (done) => {
+    const request = {
+      method: 'PUT',
+      url: '/unlike/8',
+    };
+    server.inject(request, (response) => {
+      expect(response.result.message).toEqual('unliked');
+      done();
+    });
+  }, 100000);
+  it('checks if status is unliked in db', (done) => {
+    const request = {
+      method: 'PUT',
+      url: '/unlike/7',
+    };
+    server.inject(request, () => {
+      Models.likes.findOne({
+        where: {
+          bookId: 7,
+        },
+      }).then((result) => {
+        expect(result.dataValues.liked).toEqual(0);
+        done();
+      });
     });
   }, 100000);
 });

@@ -42,7 +42,6 @@ const groupByAuthor = (books) => {
   return booksByAuthor;
 };
 const addBooksToTable = (books) => {
-  // Models.books.destroy({ where: {} }).then(() => {
   const promiseArray = [];
   books.forEach((book) => {
     const promise = new Promise((resolve) => {
@@ -57,7 +56,6 @@ const addBooksToTable = (books) => {
     promiseArray.push(promise);
   });
   return promiseArray;
-  // });
 };
 const route = [
   {
@@ -91,6 +89,48 @@ const route = [
               });
             });
           });
+        });
+      });
+    },
+  },
+  {
+    method: 'PUT',
+    path: '/like/{id}',
+    handler: (request, response) => {
+      Models.likes.update(
+        {
+          liked: 1,
+        },
+        {
+          where: {
+            bookId: request.params.id,
+          },
+        },
+      ).then(() => {
+        response({
+          statusCode: 200,
+          message: 'Liked',
+        });
+      });
+    },
+  },
+  {
+    method: 'PUT',
+    path: '/unlike/{id}',
+    handler: (request, response) => {
+      Models.likes.update(
+        {
+          liked: 0,
+        },
+        {
+          where: {
+            bookId: request.params.id,
+          },
+        },
+      ).then(() => {
+        response({
+          statusCode: 200,
+          message: 'unliked',
         });
       });
     },
