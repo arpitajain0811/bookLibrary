@@ -97,15 +97,11 @@ const route = [
     method: 'PUT',
     path: '/like/{id}',
     handler: (request, response) => {
-      Models.likes.update(
-        {
+      Models.likes.upsert(
+        { 
+          bookId:request.params.id,
           liked: 1,
-        },
-        {
-          where: {
-            bookId: request.params.id,
-          },
-        },
+        },  
       ).then(() => {
         response({
           statusCode: 200,
@@ -118,14 +114,10 @@ const route = [
     method: 'PUT',
     path: '/unlike/{id}',
     handler: (request, response) => {
-      Models.likes.update(
+      Models.likes.upsert(
         {
+          bookId: request.params.id,
           liked: 0,
-        },
-        {
-          where: {
-            bookId: request.params.id,
-          },
         },
       ).then(() => {
         response({

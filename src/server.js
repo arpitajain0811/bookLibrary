@@ -10,5 +10,5 @@ server.connection({
 });
 
 server.route(Routes);
-// server.start();
+server.start();
 module.exports = server;

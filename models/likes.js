@@ -1,7 +1,7 @@
 
 module.exports = (sequelize, DataTypes) => {
   const likes = sequelize.define('likes', {
-    bookId: DataTypes.INTEGER,
+    bookId: {type: DataTypes.INTEGER, unique:true},
     liked: { type: DataTypes.INTEGER, defaultValue: 0 },
   }, {
     classMethods: {

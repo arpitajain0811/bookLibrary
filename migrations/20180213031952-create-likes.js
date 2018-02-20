@@ -10,6 +10,7 @@ module.exports = {
     },
     bookId: {
       type: Sequelize.INTEGER,
+      unique: true,
     },
     liked: {
       type: Sequelize.INTEGER,
