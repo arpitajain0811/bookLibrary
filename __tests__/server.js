@@ -66,7 +66,7 @@ describe('like and unlike books', () => {
       url: '/like/7',
     };
     server.inject(request, (response) => {
-      console.log("##",response.result);
+      console.log('##', response.result);
       expect(response.result.message).toEqual('Liked');
       done();
     });
@@ -111,6 +111,22 @@ describe('like and unlike books', () => {
         expect(result.dataValues.liked).toEqual(0);
         done();
       });
+    });
+  }, 100000);
+  it('gets likes from db', (done) => {
+    const request = {
+      method: 'GET',
+      url: '/likes',
+    };
+    server.inject(request, () => {
+      // Models.likes.findOne({
+      //   where: {
+      //     bookId: 7,
+      //   },
+      // }).then((result) => {
+      //   expect(result.dataValues.liked).toEqual(0);
+      //   done();
+      // });
     });
   }, 100000);
 });

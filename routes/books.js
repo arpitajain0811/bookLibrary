@@ -41,6 +41,19 @@ const groupByAuthor = (books) => {
   });
   return booksByAuthor;
 };
+const validateId = (id) => {
+  const promise = new Promise((resolve) => {
+    Models.books.find({
+      where: {
+        bookId: id,
+      },
+    }).then((user) => {
+      if (user) resolve(true);
+      else { resolve(false); }
+    });
+  });
+  return promise;
+};
 const addBooksToTable = (books) => {
   const promiseArray = [];
   books.forEach((book) => {
@@ -94,19 +107,35 @@ const route = [
     },
   },
   {
+    method: 'GET',
+    path: '/books/local',
+    handler: (request, response) => {
+      Models.books.findAll().then((result) => {
+        response(result);
+      });
+    },
+  },
+  {
     method: 'PUT',
     path: '/like/{id}',
     handler: (request, response) => {
-      Models.likes.upsert(
-        { 
-          bookId:request.params.id,
-          liked: 1,
-        },  
-      ).then(() => {
-        response({
-          statusCode: 200,
-          message: 'Liked',
-        });
+      const validPromise = validateId(request.params.id);
+      validPromise.then((valid) => {
+        if (valid) {
+          Models.likes.upsert({
+            bookId: request.params.id,
+            liked: 1,
+          }).then(() => {
+            response({
+              statusCode: 200,
+              message: 'Liked',
+            });
+          });
+        } else {
+          response({
+            message: 'Book does not exist',
+          });
+        }
       });
     },
   },
@@ -114,17 +143,31 @@ const route = [
     method: 'PUT',
     path: '/unlike/{id}',
     handler: (request, response) => {
-      Models.likes.upsert(
-        {
-          bookId: request.params.id,
-          liked: 0,
-        },
-      ).then(() => {
-        response({
-          statusCode: 200,
-          message: 'unliked',
-        });
+      const validPromise = validateId(request.params.id);
+      validPromise.then((valid) => {
+        if (valid) {
+          Models.likes.upsert({
+            bookId: request.params.id,
+            liked: 0,
+          }).then(() => {
+            response({
+              statusCode: 200,
+              message: 'unliked',
+            });
+          });
+        } else {
+          response({
+            message: 'Book does not exist',
+          });
+        }
       });
+    },
+  },
+  {
+    method: 'GET',
+    path: '/likes',
+    handler: (request, reply) => {
+
     },
   },
 ];
