@@ -175,7 +175,9 @@ const route = [
     method: 'GET',
     path: '/likes',
     handler: (request, reply) => {
-
+      Models.books.findAll().then((result) => {
+        reply(result);
+      });
     },
   },
 ];
