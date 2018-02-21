@@ -111,7 +111,15 @@ const route = [
     path: '/books/local',
     handler: (request, response) => {
       Models.books.findAll().then((result) => {
-        response(result);
+        if (result.length === 0) {
+          response({
+            message: 'empty',
+          });
+        }
+        response({
+          result,
+          message: 'not empty',
+        });
       });
     },
   },
