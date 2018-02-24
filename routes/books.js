@@ -31,14 +31,17 @@ const getRatings = (books) => {
 const groupByAuthor = (books) => {
   const booksByAuthor = {};
   books.forEach((book) => {
-    if (book.Author in booksByAuthor) {
-      booksByAuthor[book.Author].push(book);
+    // console.log('#', book.dataValues, '$');
+    const bookObj = book.dataValues;
+    if (bookObj.author in booksByAuthor) {
+      booksByAuthor[bookObj.author].push(bookObj);
     } else {
-      const author = book.Author;
-      booksByAuthor[author] = [];
-      booksByAuthor[author].push(book);
+      const Author = bookObj.author;
+      booksByAuthor[Author] = [];
+      booksByAuthor[Author].push(bookObj);
     }
   });
+  // console.log(booksByAuthor);
   return booksByAuthor;
 };
 const validateId = (id) => {
@@ -111,13 +114,17 @@ const route = [
     path: '/books/local',
     handler: (request, response) => {
       Models.books.findAll().then((result) => {
+        console.log(result);
+        console.log(result.length);
         if (result.length === 0) {
           response({
             message: 'empty',
           });
         }
+        // console.log(result[1].dataValues);
+        const booksByAuthor = groupByAuthor(result);
         response({
-          result,
+          booksByAuthor,
           message: 'not empty',
         });
       });
@@ -154,6 +161,7 @@ const route = [
       const validPromise = validateId(request.params.id);
       validPromise.then((valid) => {
         if (valid) {
+          console.log('valid');
           Models.likes.upsert({
             bookId: request.params.id,
             liked: 0,
@@ -175,7 +183,7 @@ const route = [
     method: 'GET',
     path: '/likes',
     handler: (request, reply) => {
-      Models.books.findAll().then((result) => {
+      Models.likes.findAll().then((result) => {
         reply(result);
       });
     },
